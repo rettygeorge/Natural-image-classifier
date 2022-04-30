@@ -1,0 +1,20 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="main">
+    <h1>
+        Image Predictor
+    </h1>
+    <div style="background-color:white">
+        <hr>
+        <hr>
+    </div>
+    <h2> Here is the Result</h2>
+    <img src="{{ uploaded_image }}" height="280px" width="400px">
+    <p>
+    <h2>
+        <b> {{ prediction_text }}</b>
+    </h2>
+    </p>
+</div>
+
+{% endblock %}
