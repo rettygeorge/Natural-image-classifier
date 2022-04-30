@@ -1,11 +1,11 @@
 import os
-from flask import Flask, redirect, url_for, request, render_template, Response, jsonify, redirect
+from flask import Flask, redirect, url_for, request, render_template, Response, redirect, send_from_directory
 import numpy as np
 from gevent.pywsgi import WSGIServer
 from tensorflow.keras.preprocessing.image import load_img , img_to_array
 import pickle
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static/image', static_folder = "static/image")
 
 img_width, img_height = 180, 180
 
@@ -60,10 +60,8 @@ def predicter():
     file.save(os.path.join(target_img , file.filename))
     img_path = os.path.join(target_img , file.filename)
     class_result , prob_result = predict(img_path , model)
-    print(class_result , prob_result)
-    
-
-    return "vsvß"
+    result_text = "This image belongs to % s class with % s %% probability" % (class_result, prob_result)
+    return render_template('result.html', result_text=result_text, img_path=file.filename)
 
 if __name__ == '__main__':
     http_server = WSGIServer(('0.0.0.0', 5000), app)
